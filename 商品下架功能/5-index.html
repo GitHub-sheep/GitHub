@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: #e15671;
+			text-align: center;
+			font-family: Arial;
+			font-size: 14px;
+		}
+		
+		.clear{zoom:1}
+		.clear:after{display:block;clear:both;content:"";visibility:hidden;height:0} 
+
+		#logo {
+			margin: 56px auto;
+			width: 241px;
+			height: 60px;
+			display: inline-block;
+			background: url('images/logo.png') no-repeat;
+		}
+
+		#container {
+			margin: 0 auto 10px;
+			position: relative;
+			width: 990px;
+			height: 440px;
+			text-align: center;
+		}
+
+		.box {
+			position: absolute;
+			width: 240px;
+			height: 440px;
+		}
+		.box:nth-child(1) {
+			left: 0;
+			top: 0;
+		}
+		.box:nth-child(2) {
+			left: 250px;
+			top: 0;
+		}
+		.box:nth-child(3) {
+			left: 500px;
+			top: 0;
+		}
+		.box:nth-child(4) {
+			left: 750px;
+			top: 0;
+		}
+		.box .header {
+			padding: 0 20px;
+			height: 40px;
+			line-height: 40px;
+			background-color: #191919;
+			color: #e15671;
+		}
+		.box .header .time {
+			float: left;
+			margin-top: 5px;
+			background: #191919;
+			width: 150px;
+			height: 24px;
+			border: 0;
+			border-bottom: 1px solid #E15671;
+			outline: none;
+			line-height: 24px;
+			color: #E15671;
+			font-size: 14px;
+		}
+		.box .header .time:focus {
+			border-bottom-color: rgba(37, 139, 253, 1);
+			color: rgba(37, 139, 253, 1);
+		}
+		.box .header .btn {
+			float: right;
+			cursor: pointer;
+		}
+		.box .content {
+			padding: 30px 12px;
+			background-color: #fff;
+		}
+		.box .countdown {
+			height: 28px;
+			overflow: hidden;
+		}
+		.box .countdown span {
+			float: left;
+			margin-right: 3px;
+			line-height: 28px;
+			text-align: center;
+		}
+		.box .countdown span.text {
+			width: 55px;
+			color: #8f8f8f;
+		}
+		.box .countdown span.number {
+			width: 19px;
+			background-color: #e15671;
+			color: #fff;
+			font-weight: bold;
+			border-radius: 4px;
+		}
+		.box .countdown span.point {
+			color: #e15671;
+			font-weight: bold;
+		}
+		.box .thumbnail {
+			display: table-cell;
+			width: 216px;
+			height: 209px;
+			vertical-align: middle;
+			text-align: center;
+		}
+		.box .name {
+			line-height: 24px;
+			font-weight: bold;
+		}
+		.box .price-text {
+			line-height: 38px;
+			color: #8f8f8f;
+		}
+		.box .price-text .price {
+			color: #e15671;
+			font-weight: bold;
+		}
+		.box .mask {
+			display: none;
+			opacity: 0;
+			position: absolute;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			z-index: 99;
+			background: rgba(0,0,0,.7);
+		}
+		.box .sold-out-img {
+			display: none;
+			opacity: 0;
+			position: absolute;
+			left: 0px;
+			top: 100px;
+			z-index: 100;
+			width: 264px;
+			height: 264px;
+			background: url('images/sold-out.png') no-repeat;
+			background-size: contain;
+		}
+
+		#list {
+			width: 990px;
+			margin: 0 auto 0;
+			border-collapse: collapse;
+		}
+		#list thead {
+			background-color: #191919;
+			color: white;
+			height: 40px;
+			line-height: 40px;
+		}
+		#list thead th {
+			padding-left: 20px;
+		}
+		#list thead th:nth-child(1) {
+			width: 430px;
+			text-align: left;
+		}
+		#list thead th:nth-child(2) {
+			width: 450px;
+			text-align: left;
+		}
+		#list thead th:nth-child(3) {
+			width: *;
+		}
+
+		#list tbody tr:nth-child(odd) {
+			background-color: #fff;
+		}
+		#list tbody tr:nth-child(even) {
+			background-color: #f6f5f6;
+		}
+		#list tbody td {
+			padding: 20px;
+			height: 40px;
+			text-align: left;
+		}
+		#list tbody td:nth-child(2) {
+			color: #E15671;
+			font-weight: bold;
+		}
+		#list tbody td:nth-last-child(1) {
+			text-align: center;
+		}
+		#list td img {
+			width: 30px;
+		}
+		
+		footer {
+			margin-top: 50px;
+			padding: 10px;
+			text-align: center;
+			line-height: 28px;
+			color: #FFFFFF;
+		}
+		footer a {
+			text-decoration: none;
+			color: #FFFFFF;
+		}
+	</style>
+	<script src="./utils.js"></script>
+</head>
+<body>
+
+	<header><a href="javascript:;" id="logo"></a></header>
+
+	<div id="container" class="clear">
+
+		<!-- <div class="box">
+			<div class="header">
+				<input class="time" value="2016 11 29 19:41:00">
+				<span class="btn">确定</span>
+			</div>
+			<div class="content">
+		
+				<div class="countdown">
+					<span class="text">剩余</span>
+					<span class="number">0</span>
+					<span class="number">0</span>
+					<span class="point">:</span>
+					<span class="number">0</span>
+					<span class="number">9</span>
+					<span class="point">:</span>
+					<span class="number">4</span>
+					<span class="number">0</span>
+				</div>
+		
+				<a href="javascript:;" class="thumbnail">
+					<img src="images/goods_1.png">
+				</a>
+		
+				<p class="name">iphone7s plus 酷炫手机</p>
+				<p class="price-text">
+					抢购价：
+					<span class="price">￥8000</span>
+				</p>
+		
+			</div>
+			<div class="mask"></div>
+			<div class="sold-out-img"></div>
+		</div>
+		-->
+
+	</div>
+
+	<table id="list">
+		<thead>
+			<tr>
+				<th>商品</th>
+				<th>价钱</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<!--<tr>
+				<td>27 英寸配备 Retina 5K显示屏</td>
+				<td>￥15999</td>
+				<td></td>
+			</tr>-->
+		</tbody>
+	</table>
+	
+	<footer>
+		<span>&copy; <a href="http://miaov.com">MIAOV.COM</a> 版权所有</span>
+	</footer>
+	<script src="./data.js"></script>
+	<script src="./createHtml.js"></script>
+	<script>
+		function addZero(n){
+			return n < 10 ? "0"+ n : n;
+		}
+		function getCurrentTime(){
+			var d = new Date();
+			// "2017 7 17 15:21:00"
+			return d.getFullYear()+" "+(d.getMonth()+1)+ " " + d.getDate() + " "+ addZero(d.getHours())+":"+addZero(d.getMinutes())+":"+ addZero(d.getSeconds()+3);	
+		}
+
+		function shake(element,attr,speed,callback){
+			if(element.shakeTime){
+				return;
+			}
+			var arr = [];
+			for( var i = speed; i > 0 ; i-=3 ){
+				arr.push(i,-i);
+			}
+			arr.push(0);
+			console.log(arr);
+			var n = 0;
+			var begin = parseFloat(getComputedStyle(element)[attr]);
+			clearInterval(element.shakeTime);
+			element.shakeTime = setInterval(function (){
+				n++;
+				element.style[attr] = begin + arr[n] + 'px';
+				if(n >= arr.length-1){
+					clearInterval(element.shakeTime);
+					element.shakeTime = null;
+					callback();
+				}
+			},30)
+
+		}
+
+		var container = document.querySelector("#container");
+		// 2.根据数据生成结构
+		var newHtml = createBoxHtml(data);
+
+		container.innerHTML = newHtml;
+
+		// 交互
+
+		//3. 获取到所有的box，然后封装一个方法，把每一个box传到函数中，在函数中获取box下的按钮，input，倒计时的元素
+		var boxs = $(".box",container);
+
+		for( var i = 0; i < boxs.length; i++ ){
+			fn(boxs[i])
+		}
+		// 操作每一个box中的内容
+		function fn(box){
+			var btn = $(".btn",box)[0];
+			var time = $(".time",box)[0];
+			var allSpans = $(".countdown span",box);
+			var mask = $(".mask",box)[0];
+			var solt = $(".sold-out-img",box)[0];
+			var timer = null;
+			btn.onclick = function (){
+				// 4. 获取value值做倒计时
+				time.value = getCurrentTime();  // 未来时间
+				// 5. 倒计时
+				var futrueTime = time.value;  // 未来时间
+
+				func(futrueTime);
+
+				// 开启定时器，自动倒计时
+				timer = setInterval(function (){
+					func(futrueTime);	
+				},1000)
+
+			};
+
+			//6. 封装倒计时的函数
+			function func(futrueTime){
+				var futrueDate = new Date(futrueTime);  // 未来时间对象
+
+				var nowDate = new Date();  // 此时此刻的时间对象
+				// 与未来时间的差值
+				var dValue = (futrueDate.getTime() - nowDate.getTime())/1000;
+
+				// 7. 做到倒计时到时间的限制
+				if(dValue <= 0){
+					dValue = 0;
+					clearInterval(timer);
+					//8. 抖动
+					shake(box,"left",30,function (){
+						console.log("抖完了");	
+						// 9. 淡出mask遮罩层
+						mask.style.display = 'block';
+						solt.style.display = 'block';
+						mTween(mask,{
+							opacity:1
+						},200);
+						mTween(solt,{
+							left:54,
+							top:154,
+							width:132,
+							height:132,
+							opacity:1
+						},100,'bounceOut',function (){
+							// 10. 商品下架之后，下面展示这个商品
+							
+						});
+
+						
+					});
+				}
+
+
+				// 计算出剩余的时分秒
+				var hours = Math.floor(dValue%86400/3600);
+				var min = Math.floor(dValue%86400%3600/60);
+				var se = Math.floor(dValue%60);
+
+				var str = addZero(hours)+":"+addZero(min)+":"+addZero(se);
+
+				for( var i = 1; i < allSpans.length; i++ ){
+					allSpans[i].innerHTML = str.charAt(i-1);
+				}
+			}
+		}
+
+	</script>
+
+</body>
+</html>
