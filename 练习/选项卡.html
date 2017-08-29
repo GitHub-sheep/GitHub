@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box div,
+        #box2 div {
+            width: 100px;
+            height: 100px;
+            background: red;
+            display: none;
+        }
+
+        .yellow {
+            background: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <input class="yellow" type="button" value="按钮1" />
+        <input type="button" value="按钮2" />
+        <input type="button" value="按钮3" />
+        <div style="display: block;">按钮1</div>
+        <div>按钮2</div>
+        <div>按钮3</div>
+    </div>
+    <div id="box2">
+        <input class="yellow" type="button" value="按钮1" />
+        <input type="button" value="按钮2" />
+        <input type="button" value="按钮3" />
+        <div style="display: block;">按钮1</div>
+        <div>按钮2</div>
+        <div>按钮3</div>
+    </div>
+    <input type="button" value="让第一个自动播放" id="btn1" />
+    <input type="button" value="停止第二个自动播放" id="btn2" />
+    <script>
+        let box1 = document.getElementById("box");
+        let box2 = document.getElementById("box2");
+
+        function Tab(params) {
+            console.log(this)
+            this.inputs = params.querySelectorAll('input');
+            this.boxs = params.querySelectorAll('div');
+            this.timer = null;
+        }
+        Tab.prototype.init = function () {
+            let that = this;
+            for (var i = 0; i < this.inputs.length; i++) {
+                this.inputs[i].index = i;
+                this.inputs[i].onclick = function () {
+                    for (var j = 0; j < that.inputs.length; j++) {
+                        that.inputs[j].classList.remove('yellow');
+                        that.boxs[j].style.display = 'none';
+                    }
+                    this.classList.add('yellow');
+                    that.boxs[this.index].style.display = 'block';
+                }
+            }
+        }
+        //第二个自动播放
+        Tab.prototype.autoplay = function () {
+            let n = 0;
+            this.timer = setInterval(() => {
+                n++;
+                if (n > this.inputs.length - 1) {
+                    n = 0;
+                }
+                for (let i = 0; i < this.inputs.length; i++) {
+                    this.inputs[i].className = '';
+                    this.boxs[i].style.display = 'none';
+                }
+                this.inputs[n].className = 'yellow';
+                this.boxs[n].style.display = 'block';
+            }, 1000);
+        }
+        Tab.prototype.stopPlay = function () {
+            clearInterval(this.timer)
+            this.timer = null;
+        }
+        let b1 = new Tab(box1);
+        b1.init();
+        let b2 = new Tab(box2);
+        b2.init();
+        b2.autoplay();
+        btn2.onclick = function () {
+            b2.stopPlay();
+        }
+        btn1.onclick = function () {
+            b1.autoplay();
+        }
+    </script>
+</body>
+
+</html>
